@@ -3,7 +3,7 @@ clear;clc;
 % Parameter intialize. 
 base_path = 'Y:\Chenghang\ET33_Tigre\20230504_1\';
 exp_folder = [base_path 'analysis\'];
-path = [exp_folder  'elastic_align_rescale\'];
+path = [exp_folder  'elastic_align\'];
 
 mergedpath = [path 'storm_merged\'];
 mergedfiles = [dir([mergedpath '*.png']) dir([mergedpath '*.tif'])];
@@ -47,15 +47,23 @@ Mask = logical(Mask);
 for i = 1:num_images_2
     I(:,:,i) = BG(:,:,i).*uint8(Mask(:,:,i));
 end
-%% Adaptive conveitonal filter. 
+% Adaptive conveitonal filter. 
 %Change the sen value if necessary. 
 DYs = false(size(BG));
 sen = 0.2;
 parfor i = 1:num_images_2
-ad_thresh = adaptthresh(I(:,:,i),sen);
-DYs(:,:,i) = imbinarize(I(:,:,i),ad_thresh);
+    ad_thresh = adaptthresh(I(:,:,i),sen);
+    DYs(:,:,i) = imbinarize(I(:,:,i),ad_thresh);
 end
-imwrite(uint8(DYs(:,:,1)).*BG(:,:,1),[outpath 'Vconv_filter_' sprintf('%03d',1) '_' char(string(sen)) '.tif']);
+imwrite(uint8(DYs(:,:,1)).*BG(:,:,1),[outpath sprintf('%03d',1) '_' char(string(sen)) '.tif']);
+%
+conv_thred_path = [path 'conv_488_thred\'];
+if exist(conv_thred_path,'dir') == false
+    mkdir(conv_thred_path);
+end
+for i = 1:num_images_2
+    imwrite(uint8(DYs(:,:,i)).*BG(:,:,i),[conv_thred_path sprintf('%03d',i) '.tif']);
+end
 
 %% STORM image processing. 
 %In most cases nothing needs to be changed here. 

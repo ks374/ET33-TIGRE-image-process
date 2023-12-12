@@ -1,0 +1,3 @@
+clear;clc
+Inpath = 'Y:\Chenghang\ET33_Tigre\20230504_1\analysis\';
+AS = Axon_s

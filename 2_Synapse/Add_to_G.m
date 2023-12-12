@@ -120,7 +120,7 @@ parfor jj=1:numel(statsGwater)
 
    statsGwater(jj).tints_p140 = sum([RPixelValues_m140]);
    statsGwater(jj).area_p140 = numel([RPixelValues_m140]);
-   statsGwater(jj).volume_p140 = numel([RPixelValues_m140]>0);
+   statsGwater(jj).volume_p140 = numel(find([RPixelValues_m140]>0));
    statsGwater(jj).WeightedCentroid_p140(1) = sum([PixelList_m140(:,1)].*...
            double([RPixelValues_m140]))/(sum([RPixelValues_m140]));
    statsGwater(jj).WeightedCentroid_p140(2) = sum([PixelList_m140(:,2)].*...
