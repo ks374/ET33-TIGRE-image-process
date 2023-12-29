@@ -45,15 +45,15 @@ classdef Axon_searcher < Img_basics
             end
         end
 
-        function stats_checker(obj,outpath,block_size,n_seq,stats_A,stats_B,stats_C)
+        function stats_checker(obj,block_size,n_seq,stats_A,stats_B,stats_C)
             %stats_checker(obj,block_size,n_seq=1:10,stats_A = "statsGwater_ss",stats_B,stats_C)
             stats_temp = obj.(stats_A);
             for i = 1:numel(n_seq)
                 disp("Checking stats# "+string(n_seq(i))+":");
-                disp("Stats paired_idx = " + string(stats_temp(n_seq(i)).paired_idx));
+                %disp("Stats paired_idx = " + string(stats_temp(n_seq(i)).paired_idx));
                 H = stats_checker@Img_basics(obj,block_size,n_seq(i),stats_A,stats_B,stats_C);
                 %saveas(H,)
-                close H;
+                %close H;
             end
         end
 
@@ -61,11 +61,11 @@ classdef Axon_searcher < Img_basics
             %check conventional and STORM at the same time
             for i = 1:numel(n_seq)
                 disp("Checking stats# "+string(n_seq(i))+":");
-                stats_temp = obj.(stats_A);
-                disp("Stats Conv paired_idx = " + string(stats_temp(n_seq(i)).paired_idx));
+                %stats_temp = obj.(stats_A);
+                %disp("Stats Conv paired_idx = " + string(stats_temp(n_seq(i)).paired_idx));
                 obj.stats_checker(block_size,n_seq(i),stats_A,stats_B,stats_C);
-                stats_temp = AS_another.(stats_A);
-                disp("Stats Storm paired_idx = " + string(stats_temp(n_seq(i)).paired_idx));
+                %stats_temp = AS_another.(stats_A);
+                %disp("Stats Storm paired_idx = " + string(stats_temp(n_seq(i)).paired_idx));
                 AS_another.stats_checker(block_size,n_seq(i),stats_A,stats_B,stats_C);
                 disp("Press any key to continue...");pause;close all;
             end

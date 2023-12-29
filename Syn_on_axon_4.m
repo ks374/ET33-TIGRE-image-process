@@ -2,6 +2,19 @@ clear;clc
 Input_path = 'Y:\Chenghang\ET33_Tigre\20230504_1\analysis\';
 outpath = [Input_path 'Result\4_S_on_axon\'];
 %%
+%Manually find VGLuT2 clusters that are centeredin in convetional axonal
+%staining: 
+block_size = 100;
+n_seq = 1:100;
+stats_A = "statsGwater_ss";
+stats_B = "Img_axon";
+stats_C = "Img_bassoon";
+AS_conv_0 = Axon_searcher(Input_path,true);
+AS_conv_0.stats_checker(block_size,n_seq,stats_A,stats_B,stats_C);
+n_seq = 6;
+AS_STORM = Axon_searcher(Input_path,false);
+AS_conv_0.stats_checker_both(block_size,n_seq,stats_A,stats_B,stats_C,AS_STORM);
+%%
 outfile = [outpath 'Pair_Result.xlsx'];
 search_radius = 0;
 AS_conv_0 = Axon_searcher(Input_path,true);
